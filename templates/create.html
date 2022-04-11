@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Josie Libbon</title>
+    <link href="../static/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+    <body>
+        <!-- Top gradient header and navigation -->
+        <header id="home" class="mainHeader">
+            <nav class="topnav" id="myTopnav">
+                <a href="/">Home</a>
+                {% for game_type in game_types: %}
+                  {% if game_type["type"] == "Nintendo" %}
+                <a href="/console/{{game_type['type']}}">Nintendo</a>
+                  {% endif %}
+                {% endfor %}
+                {% for game_type in game_types: %}
+                  {% if game_type["type"] == "PS4" %}
+                <a href="/console/{{game_type['type']}}">PS4</a>
+                  {% endif %}
+                {% endfor %}
+                {% for game_type in game_types: %}
+                  {% if game_type["type"] == "XBox" %}
+                <a href="/console/{{game_type['type']}}">XBox</a>
+                  {% endif %}
+                {% endfor %}
+                <div class="dropdown">
+                    <button class="dropbtn">Account</button>
+                    <div class="dropdown-content">
+                      {% if login == True: %}
+                        <a href="/logout">Logout</a>
+                      {% endif %}
+                      {% if login == False: %}
+                        <a href="/login">Login</a>
+                      {% endif %}
+                      <a href="/createaccount">Create Account</a>
+                      <a href="/orderhistory">Order History</a>
+                      <a href="/cart">View Cart</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="nameContainer">
+                <h1>
+                    {% if created == False %}
+                      <b> Create Account </b>
+                    {% endif %}
+                    {% if created == True %}
+                      <b> Account Created! </b>
+                    {% endif %}
+                </h1>
+            </div>
+        </header>
+<body>
+  <br></br>
+  
+    <b>Enter your account information below: </b>
+  <br></br>
+ 
+	<form action="/createaccount" method="POST">
+    Name<br><input type="text" name ="field_name"><br>
+		Username<br><input type="text" name ="field_username"><br>
+    Password<br><input type="text" name ="field_password"><br>
+    <br>
+      <button type="submit" class="button" name ="submit">Create Account</button>
+    </form>
+  </body>
+</html>

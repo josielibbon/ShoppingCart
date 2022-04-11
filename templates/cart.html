@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Josie Libbon</title>
+    <link href="../static/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+    <body>
+        <!-- Top gradient header and navigation -->
+        <header id="home" class="mainHeader">
+            <nav class="topnav" id="myTopnav">
+                <a href="/">Home</a>
+                {% for game_type in game_types: %}
+                  {% if game_type["type"] == "Nintendo" %}
+                <a href="/console/{{game_type['type']}}">Nintendo</a>
+                  {% endif %}
+                {% endfor %}
+                {% for game_type in game_types: %}
+                  {% if game_type["type"] == "PS4" %}
+                <a href="/console/{{game_type['type']}}">PS4</a>
+                  {% endif %}
+                {% endfor %}
+                {% for game_type in game_types: %}
+                  {% if game_type["type"] == "XBox" %}
+                <a href="/console/{{game_type['type']}}">XBox</a>
+                  {% endif %}
+                {% endfor %}
+                <div class="dropdown">
+                    <button class="dropbtn">Account</button>
+                    <div class="dropdown-content">
+                      {% if login == True: %}
+                        <a href="/logout">Logout</a>
+                      {% endif %}
+                      {% if login == False: %}
+                        <a href="/login">Login</a>
+                      {% endif %}
+                      <a href="/createaccount">Create Account</a>
+                      <a href="/orderhistory">Order History</a>
+                      <a href="/cart">View Cart</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="nameContainer">
+                <h1>
+                    {% if login == True %}
+                      <b> {{ session['user_name'] }} </b>
+                    {% endif %}
+                    {% if login == False %}
+                      <b> Login First! </b>
+                    {% endif %}
+                </h1>
+            </div>
+        </header>
+
+ 
+
+  
+    <!-- Section - Intro -->
+    <section id="Home"> 
+        <p>
+        <table>
+          <th>Game</th>
+          <th>Title</th>
+          <th>Quantity</th>
+          <tr>
+        {% for product in session['cart']: %}
+        <form action="/cart" method="POST">
+        <tr>
+          <td><img src="/static/images/{{ product['name'] }}.jpg"</img></td>
+          <td>{{ product['name'] }}</td>
+          <td> 
+            {% for game in games: %}
+              {% if game['title'] == product['name']: %}
+                <input type="number" class="button" name ={{game['title']}} value= {{product['quantity']}} max={{game['quantity']}} min = 1></input> 
+              {% endif %}
+            {% endfor %}
+          </td>
+      </tr>
+        </form>
+        {% endfor %}
+      </table>
+      <br></br>
+      <form action="/cart" method="POST">
+      <button type="submit" class="button" name ="submit" value = "Checkout" >Checkout</button>
+      <button type="submit" class="button" name ="submit" value = "Clear">Clear Cart</button>
+        </form>
+        </p>
+    </section>
+
+</html>
